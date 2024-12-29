@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Quotes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(
+                45deg,
+                #1a1a2e 0%,
+                #16213e 50%,
+                #1a1a2e 100%
+            );
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 20s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .quote-container {
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+            transform: perspective(1000px) rotateX(0deg);
+            animation: containerEntrance 1s ease-out;
+        }
+
+        @keyframes containerEntrance {
+            0% { transform: perspective(1000px) rotateX(30deg) translateY(100px); opacity: 0; }
+            100% { transform: perspective(1000px) rotateX(0deg) translateY(0); opacity: 1; }
+        }
+
+        .content-wrapper {
+            background: linear-gradient(
+                169deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.08) 100%
+            );
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 32px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            animation: glowingBorder 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        @keyframes glowingBorder {
+            0%, 100% { 
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 0 32px rgba(255, 255, 255, 0.05),
+                    0 0 20px rgba(255, 255, 255, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 0 50px rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .icon-decoration {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 24px;
+            animation: iconFloat 6s ease-in-out infinite;
+        }
+
+        .icon-top-left { top: 20px; left: 20px; }
+        .icon-top-right { top: 20px; right: 20px; }
+        .icon-bottom-left { bottom: 20px; left: 20px; }
+        .icon-bottom-right { bottom: 20px; right: 20px; }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -5px) rotate(5deg); }
+            50% { transform: translate(0, -10px) rotate(0deg); }
+            75% { transform: translate(-5px, -5px) rotate(-5deg); }
+        }
+
+        .arabic-verse {
+            font-family: 'Amiri', serif;
+            font-size: clamp(24px, 4vw, 36px);
+            color: #fff;
+            direction: rtl;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 100%
+            );
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.8;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        .arabic-verse::before {
+            content: '❝';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: quoteMarkFloat 3s ease-in-out infinite;
+        }
+
+        .arabic-verse::after {
+            content: '❞';
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: quoteMarkFloat 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes quoteMarkFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .surah-details {
+            font-size: clamp(14px, 2.5vw, 16px);
+            color: rgba(255, 255, 255, 0.9);
+            margin: 25px auto;
+            padding: 12px 30px;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.1)
+            );
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .surah-details i {
+            font-size: 14px;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .translation {
+            font-size: clamp(16px, 3vw, 22px);
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.7;
+            padding: 30px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.03) 100%
+            );
+            border-radius: 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 15px; }
+            .content-wrapper { padding: 25px; }
+            .arabic-verse {
+                font-size: clamp(20px, 4vw, 28px);
+                padding: 20px;
+            }
+            .translation {
+                font-size: clamp(14px, 3vw, 18px);
+                padding: 20px;
+            }
+            .icon-decoration { font-size: 18px; }
+        }
+
+        .refresh-button,
+        .previous-button,
+        .github-button {
+            position: fixed;
+            bottom: 30px;
+            width: auto;
+            height: 50px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-decoration: none;
+            padding: 0 20px;
+            gap: 10px;
+        }
+
+        .refresh-button,
+        .previous-button {
+            width: 50px;
+            padding: 0;
+        }
+
+        .refresh-button {
+            right: 30px;
+        }
+
+        .previous-button {
+            right: 90px;
+        }
+
+        .github-button {
+            left: 30px;
+        }
+
+        .github-button span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .refresh-button:hover,
+        .previous-button:hover,
+        .github-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media screen and (max-width: 768px) {
+            .refresh-button,
+            .previous-button,
+            .github-button {
+                bottom: 20px;
+                height: 45px;
+                font-size: 18px;
+            }
+            .refresh-button {
+                right: 20px;
+            }
+            .previous-button {
+                right: 75px;
+            }
+            .github-button {
+                left: 20px;
+            }
+            .github-button span {
+                font-size: 14px;
+            }
+        }
+
+        .controls-container {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .favorite-button.active {
+            color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .font-controls {
+            position: absolute;
+            bottom: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            padding: 10px;
+            border-radius: 15px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .translation-select {
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0 15px;
+            border-radius: 25px;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 768px) {
+            .controls-container {
+                left: 20px;
+                bottom: 20px;
+                flex-wrap: wrap;
+                max-width: calc(100% - 40px);
+            }
+
+            .control-button {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+
+        .control-button notification-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-button notification-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .notification-button {
+            position: relative;
+        }
+
+        .notification-button.active {
+            color: #4CAF50;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .notification-button.active::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            color: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 16px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                0 0 20px rgba(255, 255, 255, 0.1);
+            animation: toastIn 0.5s ease-out, toastOut 0.5s ease-in 9.5s;
+            text-align: center;
+            min-width: 200px;
+            max-width: 80vw;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translate(-50%, 100px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes toastOut {
+            from {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+            to {
+                transform: translate(-50%, 100px);
+                opacity: 0;
+            }
+        }
+
+        .audio-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audio-button:hover i {
+            animation: pulseScale 1s infinite;
+        }
+
+        @keyframes pulseScale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Add to existing modal styles or add new ones */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .modal.active {
+            transform: scale(1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-button {
+            padding: 10px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .modal-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .modal-button.confirm {
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .modal-button.cancel {
+            background: rgba(244, 67, 54, 0.2);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            z-index: 1001;
+            transform: translateY(-100%) translateX(-50%);
+            margin-top: -10px;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(0, 0, 0, 0.8);
+        }
+    </style>
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="quote-container">
+        <div class="content-wrapper">
+            <i class="fas fa-star icon-decoration icon-top-left"></i>
+            <i class="fas fa-moon icon-decoration icon-top-right"></i>
+            <i class="fas fa-sun icon-decoration icon-bottom-left"></i>
+            <i class="fas fa-star icon-decoration icon-bottom-right"></i>
+            
+            <div class="arabic-verse">{{ arabic_verse }}</div>
+            <div class="surah-details">
+                <i class="fas fa-book-open"></i>
+                Surah: {{ surah_name }} | 
+                <i class="fas fa-bookmark"></i>
+                Ayah: {{ ayah_number }}
+            </div>
+            <div class="translation">{{ translation }}</div>
+        </div>
+    </div>
+
+    <div class="controls-container">
+        <button class="control-button share-button" onclick="shareQuote()" title="Share Quote">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        
+        <button class="control-button favorite-button" onclick="toggleFavorite()" title="Save Verse">
+            <i class="fas fa-heart"></i>
+        </button>
+        
+        <button class="control-button copy-button" onclick="copyQuote()" title="Copy Text">
+            <i class="fas fa-copy"></i>
+        </button>
+        
+        <button class="control-button font-size-button" onclick="toggleFontControls()" title="Adjust Size">
+            <i class="fas fa-text-height"></i>
+        </button>
+        
+        <div class="font-controls" style="display: none;">
+            <button onclick="adjustFontSize('increase')">A+</button>
+            <button onclick="adjustFontSize('decrease')">A-</button>
+        </div>
+
+        <button class="control-button notification-button" onclick="toggleNotifications()" title="Daily Alert">
+            <i class="fas fa-bell"></i>
+        </button>
+
+        <button class="control-button audio-button" onclick="handleAudioRedirect()" title="Play Audio">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+
+    <button class="previous-button" onclick="goToPrevious()" title="Previous Verse">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <button class="refresh-button" onclick="window.location.reload()" title="New Verse">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <a href="https://github.com/Ahnaf-Salman" target="_blank" class="github-button" title="GitHub Profile">
+        <i class="fab fa-github"></i>
+        <span>Ahnaf-Salman</span>
+    </a>
+
+    <script>
+        // Store quotes history in session storage
+        if (!sessionStorage.getItem('quoteHistory')) {
+            sessionStorage.setItem('quoteHistory', JSON.stringify([]));
+        }
+        
+        // Add current quote to history
+        let history = JSON.parse(sessionStorage.getItem('quoteHistory'));
+        const currentQuote = {
+            arabic: document.querySelector('.arabic-verse').innerText,
+            surah: document.querySelector('.surah-details').innerText,
+            translation: document.querySelector('.translation').innerText
+        };
+        history.push(currentQuote);
+        sessionStorage.setItem('quoteHistory', JSON.stringify(history));
+
+        function adjustTextSize() {
+            const arabicVerse = document.querySelector('.arabic-verse');
+            const translation = document.querySelector('.translation');
+            
+            // Adjust Arabic verse size
+            if (arabicVerse.innerText.length > 250) {
+                arabicVerse.style.fontSize = 'clamp(18px, 3vw, 24px)';
+            } else if (arabicVerse.innerText.length > 150) {
+                arabicVerse.style.fontSize = 'clamp(20px, 3.5vw, 28px)';
+            } else {
+                arabicVerse.style.fontSize = 'clamp(24px, 4vw, 36px)';
+            }
+            
+            // Adjust translation size
+            if (translation.innerText.length > 300) {
+                translation.style.fontSize = 'clamp(14px, 2.5vw, 18px)';
+            } else if (translation.innerText.length > 200) {
+                translation.style.fontSize = 'clamp(15px, 2.8vw, 20px)';
+            } else {
+                translation.style.fontSize = 'clamp(16px, 3vw, 22px)';
+            }
+        }
+
+        // Call adjustTextSize on page load
+        adjustTextSize();
+
+        function goToPrevious() {
+            let history = JSON.parse(sessionStorage.getItem('quoteHistory'));
+            if (history.length > 1) {
+                // Remove current quote
+                history.pop();
+                // Get previous quote
+                const previousQuote = history[history.length - 1];
+                
+                // Update UI while preserving layout and icons
+                const arabicVerse = document.querySelector('.arabic-verse');
+                const surahDetails = document.querySelector('.surah-details');
+                const translation = document.querySelector('.translation');
+
+                // Update Arabic verse
+                arabicVerse.innerHTML = previousQuote.arabic;
+
+                // Update Surah details while preserving icons
+                const [surahPart, ayahPart] = previousQuote.surah.split('|').map(s => s.trim());
+                surahDetails.innerHTML = `
+                    <i class="fas fa-book-open"></i>
+                    ${surahPart} | 
+                    <i class="fas fa-bookmark"></i>
+                    ${ayahPart}
+                `;
+
+                // Update translation
+                translation.innerHTML = previousQuote.translation;
+
+                // Adjust text size for the new content
+                adjustTextSize();
+
+                // Update history
+                sessionStorage.setItem('quoteHistory', JSON.stringify(history));
+            }
+        }
+
+        const particles = document.querySelector('.particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.opacity = Math.random();
+            particles.appendChild(particle);
+        }
+
+        function shareQuote() {
+            const quoteData = {
+                arabic: document.querySelector('.arabic-verse').innerText,
+                surah: document.querySelector('.surah-details').innerText,
+                translation: document.querySelector('.translation').innerText
+            };
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Quran Quote',
+                    text: `${quoteData.surah}\n\n${quoteData.arabic}\n\n${quoteData.translation}`,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(
+                    `${quoteData.surah}\n\n${quoteData.arabic}\n\n${quoteData.translation}`
+                ).then(() => showToast('Quote copied to clipboard!'));
+            }
+        }
+
+        function toggleFavorite() {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const currentQuote = {
+                arabic: document.querySelector('.arabic-verse').innerText,
+                surah: document.querySelector('.surah-details').innerText,
+                translation: document.querySelector('.translation').innerText
+            };
+            
+            const quoteExists = favorites.some(q => q.arabic === currentQuote.arabic);
+            if (quoteExists) {
+                localStorage.setItem('favorites', JSON.stringify(
+                    favorites.filter(q => q.arabic !== currentQuote.arabic)
+                ));
+                document.querySelector('.favorite-button').classList.remove('active');
+            } else {
+                favorites.push(currentQuote);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                document.querySelector('.favorite-button').classList.add('active');
+            }
+            showToast(quoteExists ? 'Removed from favorites' : 'Added to favorites');
+        }
+
+        function copyQuote() {
+            const quoteText = `${document.querySelector('.arabic-verse').innerText}\n\n${
+                document.querySelector('.surah-details').innerText}\n\n${
+                document.querySelector('.translation').innerText}`;
+            
+            navigator.clipboard.writeText(quoteText)
+                .then(() => showToast('Quote copied to clipboard!'))
+                .catch(console.error);
+        }
+
+        function showToast(message) {
+            // Remove any existing toasts
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+
+            // Create new toast
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Remove toast after 10 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.addEventListener('animationend', (e) => {
+                        if (e.animationName === 'toastOut') {
+                            toast.remove();
+                        }
+                    });
+                }
+            }, 10000);
+        }
+
+        function adjustFontSize(action) {
+            const elements = ['.arabic-verse', '.translation'].map(
+                selector => document.querySelector(selector)
+            );
+            
+            elements.forEach(el => {
+                const currentSize = parseFloat(getComputedStyle(el).fontSize);
+                el.style.fontSize = `${currentSize * (action === 'increase' ? 1.1 : 0.9)}px`;
+            });
+        }
+
+        function toggleFontControls() {
+            const controls = document.querySelector('.font-controls');
+            controls.style.display = controls.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        // Check if current quote is in favorites on load
+        window.addEventListener('load', () => {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const currentArabic = document.querySelector('.arabic-verse').innerText;
+            if (favorites.some(q => q.arabic === currentArabic)) {
+                document.querySelector('.favorite-button').classList.add('active');
+            }
+        });
+
+        // Notification functions
+        async function toggleNotifications() {
+            if (!('Notification' in window)) {
+                showToast('Notifications not supported in this browser');
+                return;
+            }
+
+            const button = document.querySelector('.notification-button');
+            const notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true';
+
+            if (notificationsEnabled) {
+                // Disable notifications
+                localStorage.setItem('notificationsEnabled', 'false');
+                button.classList.remove('active');
+                showToast('Daily notifications disabled');
+                unregisterNotificationWorker();
+            } else {
+                // Request permission and enable notifications
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    localStorage.setItem('notificationsEnabled', 'true');
+                    button.classList.add('active');
+                    showToast('Daily notifications enabled');
+                    registerNotificationWorker();
+                    // Schedule first notification
+                    scheduleNextNotification();
+                } else {
+                    showToast('Notification permission denied');
+                }
+            }
+        }
+
+        function registerNotificationWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered');
+                    })
+                    .catch(err => console.error('ServiceWorker registration failed:', err));
+            }
+        }
+
+        function unregisterNotificationWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    registrations.forEach(registration => registration.unregister());
+                });
+            }
+        }
+
+        function scheduleNextNotification() {
+            // Calculate time until next notification (24 hours from now)
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setHours(9, 0, 0, 0); // Set to 9 AM tomorrow
+            if (tomorrow < now) tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const timeUntilNotification = tomorrow - now;
+            
+            setTimeout(() => {
+                showQuoteNotification();
+                scheduleNextNotification(); // Schedule next day's notification
+            }, timeUntilNotification);
+        }
+
+        async function showQuoteNotification() {
+            if (Notification.permission === 'granted') {
+                const response = await fetch('/random-quote');
+                const quote = await response.json();
+                
+                new Notification('Daily Quran Quote', {
+                    body: `${quote.translation}\n\n- Surah ${quote.surah_name}, Ayah ${quote.ayah_number}`,
+                    icon: '/static/icon.png',
+                    badge: '/static/badge.png',
+                    tag: 'daily-quote',
+                    requireInteraction: true
+                });
+            }
+        }
+
+        // Check notification status on page load
+        window.addEventListener('load', () => {
+            const notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true';
+            if (notificationsEnabled) {
+                document.querySelector('.notification-button').classList.add('active');
+                scheduleNextNotification();
+            }
+        });
+
+        function handleAudioRedirect() {
+            const surahDetails = document.querySelector('.surah-details').innerText;
+            const arabicVerse = document.querySelector('.arabic-verse').innerText;
+            const translation = document.querySelector('.translation').innerText;
+            
+            // Extract surah name and ayah number
+            const surahMatch = surahDetails.match(/Surah: ([^|]+)/);
+            const ayahMatch = surahDetails.match(/Ayah: (\d+)/);
+            
+            if (!surahMatch || !ayahMatch) return;
+            
+            const surahName = surahMatch[1].trim();
+            const ayahNumber = ayahMatch[1];
+            const surahNumber = getSurahNumber(surahName);
+
+            showConfirmationModal(
+                'View on Quran.com',
+                `
+                <div style="text-align: center; padding: 10px;">
+                    <div style="font-size: 1.2em; margin-bottom: 15px; direction: rtl;">
+                        ${arabicVerse}
+                    </div>
+                    <div style="margin: 15px 0; font-size: 0.9em; color: rgba(255, 255, 255, 0.9);">
+                        ${translation}
+                    </div>
+                    <div style="color: rgba(255, 255, 255, 0.8); margin: 15px 0; padding: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="margin-bottom: 5px;">Surah: ${surahName}</div>
+                        <div>Ayah: ${ayahNumber}</div>
+                    </div>
+                </div>
+                <div style="font-size: 0.9em; color: rgba(255, 255, 255, 0.7); text-align: center;">
+                    Would you like to view this verse on Quran.com?
+                </div>
+                `,
+                () => {
+                    const quranUrl = `https://quran.com/${surahNumber}`;
+                    window.open(quranUrl, '_blank', 'noopener,noreferrer');
+                }
+            );
+        }
+
+        function getSurahNumber(name) {
+            const surahMap = {
+                'Al-Fatihah': 1,
+                'Al-Baqarah': 2,
+                "Ali 'Imran": 3,
+                'An-Nisa': 4,
+                "Al-Ma'idah": 5,
+                "Al-An'am": 6,
+                "Al-A'raf": 7,
+                'Al-Anfal': 8,
+                'At-Tawbah': 9,
+                'Yunus': 10,
+                'Hud': 11,
+                'Yusuf': 12,
+                "Ar-Ra'd": 13,
+                'Ibrahim': 14,
+                'Al-Hijr': 15,
+                'An-Nahl': 16,
+                'Al-Isra': 17,
+                'Al-Kahf': 18,
+                'Maryam': 19,
+                'Taha': 20,
+                'Al-Anbya': 21,
+                'Al-Hajj': 22,
+                "Al-Mu'minun": 23,
+                'An-Nur': 24,
+                'Al-Furqan': 25,
+                "Ash-Shu'ara": 26,
+                'An-Naml': 27,
+                'Al-Qasas': 28,
+                'Al-Ankabut': 29,
+                'Ar-Rum': 30,
+                'Luqman': 31,
+                'As-Sajdah': 32,
+                'Al-Ahzab': 33,
+                'Saba': 34,
+                'Fatir': 35,
+                'Ya-Sin': 36,
+                'As-Saffat': 37,
+                'Sad': 38,
+                'Az-Zumar': 39,
+                'Ghafir': 40,
+                'Fussilat': 41,
+                'Ash-Shura': 42,
+                'Az-Zukhruf': 43,
+                'Ad-Dukhan': 44,
+                'Al-Jathiyah': 45,
+                'Al-Ahqaf': 46,
+                'Muhammad': 47,
+                'Al-Fath': 48,
+                'Al-Hujurat': 49,
+                'Qaf': 50,
+                'Adh-Dhariyat': 51,
+                'At-Tur': 52,
+                'An-Najm': 53,
+                'Al-Qamar': 54,
+                'Ar-Rahman': 55,
+                "Al-Waqi'ah": 56,
+                'Al-Hadid': 57,
+                'Al-Mujadila': 58,
+                'Al-Hashr': 59,
+                'Al-Mumtahanah': 60,
+                'As-Saf': 61,
+                "Al-Jumu'ah": 62,
+                'Al-Munafiqun': 63,
+                'At-Taghabun': 64,
+                'At-Talaq': 65,
+                'At-Tahrim': 66,
+                'Al-Mulk': 67,
+                'Al-Qalam': 68,
+                'Al-Haqqah': 69,
+                "Al-Ma'arij": 70,
+                'Nuh': 71,
+                'Al-Jinn': 72,
+                'Al-Muzzammil': 73,
+                'Al-Muddaththir': 74,
+                'Al-Qiyamah': 75,
+                'Al-Insan': 76,
+                'Al-Mursalat': 77,
+                'An-Naba': 78,
+                "An-Nazi'at": 79,
+                'Abasa': 80,
+                'At-Takwir': 81,
+                'Al-Infitar': 82,
+                'Al-Mutaffifin': 83,
+                'Al-Inshiqaq': 84,
+                'Al-Buruj': 85,
+                'At-Tariq': 86,
+                "Al-A'la": 87,
+                'Al-Ghashiyah': 88,
+                'Al-Fajr': 89,
+                'Al-Balad': 90,
+                'Ash-Shams': 91,
+                'Al-Layl': 92,
+                'Ad-Duha': 93,
+                'Ash-Sharh': 94,
+                'At-Tin': 95,
+                'Al-Alaq': 96,
+                'Al-Qadr': 97,
+                'Al-Bayyinah': 98,
+                'Az-Zalzalah': 99,
+                'Al-Adiyat': 100,
+                "Al-Qari'ah": 101,
+                'At-Takathur': 102,
+                'Al-Asr': 103,
+                'Al-Humazah': 104,
+                'Al-Fil': 105,
+                'Quraysh': 106,
+                "Al-Ma'un": 107,
+                'Al-Kawthar': 108,
+                'Al-Kafirun': 109,
+                'An-Nasr': 110,
+                'Al-Masad': 111,
+                'Al-Ikhlas': 112,
+                'Al-Falaq': 113,
+                'An-Nas': 114
+            };
+
+            return surahMap[name] || 1;
+        }
+
+        function showConfirmationModal(title, message, onConfirm) {
+            // Create modal elements
+            const overlay = document.createElement('div');
+            overlay.className = 'modal-overlay';
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            
+            modal.innerHTML = `
+                <h3 style="color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-size: 1.3em;">${title}</h3>
+                <div class="modal-content">${message}</div>
+                <div class="modal-buttons">
+                    <button class="modal-button confirm">
+                        <i class="fas fa-play" style="margin-right: 8px;"></i>Listen
+                    </button>
+                    <button class="modal-button cancel">Cancel</button>
+                </div>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Add animation classes after a brief delay
+            setTimeout(() => {
+                overlay.classList.add('active');
+                modal.classList.add('active');
+            }, 10);
+            
+            // Handle button clicks
+            const confirmBtn = modal.querySelector('.confirm');
+            const cancelBtn = modal.querySelector('.cancel');
+            
+            confirmBtn.addEventListener('click', () => {
+                closeModal(overlay);
+                onConfirm();
+            });
+            
+            cancelBtn.addEventListener('click', () => {
+                closeModal(overlay);
+            });
+            
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeModal(overlay);
+                }
+            });
+        }
+
+        function closeModal(overlay) {
+            overlay.classList.remove('active');
+            overlay.querySelector('.modal').classList.remove('active');
+            setTimeout(() => overlay.remove(), 300);
+        }
+
+        // Update modal styles
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            .modal {
+                background: rgba(30, 30, 40, 0.95);
+                backdrop-filter: blur(15px);
+                padding: 30px;
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+                max-width: 90%;
+                width: 450px;
+            }
+
+            .modal-content {
+                color: rgba(255, 255, 255, 0.9);
+                margin-bottom: 25px;
+                font-size: 1.1em;
+                line-height: 1.6;
+            }
+
+            .modal-buttons {
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .modal-button {
+                padding: 12px 25px;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.9);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 1em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-button:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .modal-button.confirm {
+                background: rgba(76, 175, 80, 0.2);
+            }
+
+            .modal-button.confirm:hover {
+                background: rgba(76, 175, 80, 0.3);
+            }
+
+            .modal-button.cancel {
+                background: rgba(244, 67, 54, 0.2);
+            }
+
+            .modal-button.cancel:hover {
+                background: rgba(244, 67, 54, 0.3);
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // Custom tooltip functionality
+        function createTooltip(element, text) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = text;
+            document.body.appendChild(tooltip);
+
+            element.addEventListener('mouseenter', () => {
+                const rect = element.getBoundingClientRect();
+                tooltip.style.left = rect.left + (rect.width / 2) + 'px';
+                tooltip.style.top = rect.top - 5 + 'px';
+                tooltip.style.opacity = '1';
+            });
+
+            element.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+            });
+        }
+
+        // Initialize tooltips for all buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = {
+                '.share-button': 'Share Quote',
+                '.favorite-button': 'Save Verse',
+                '.copy-button': 'Copy Text',
+                '.font-size-button': 'Adjust Size',
+                '.notification-button': 'Daily Alert',
+                '.audio-button': 'Play Audio',
+                '.previous-button': 'Previous Verse',
+                '.refresh-button': 'New Verse',
+                '.github-button': "Site Developer's GitHub Profile"
+            };
+
+            for (const [selector, text] of Object.entries(buttons)) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    createTooltip(element, text);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
